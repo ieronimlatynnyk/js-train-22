@@ -55,14 +55,14 @@ class Store {
    * Після виклику цього методу, клієнт більше не буде отримувати повідомлення про нові продукти, через filter прибираємо клієнта з масиву.
    */
   unsubscribe(customer) {
-    this.customers = this.customer.filter((c) => c != customer);
+    this.customers = this.customers.filter((c) => c !== customer);
   }
   /**
    * Метод createProduct для створення нового продукту в магазині.Приймає name - Назва нового продукту.
    * Після виклику цього методу, новий продукт буде створено, а всі підписники отримають про це повідомлення через sendNotify.
    */
   createProduct(name) {
-    const product = { name };
+    const product = new Product(name);
     this.notifySubscribers(product);
   }
   /**
@@ -71,7 +71,7 @@ class Store {
    */
   notifySubscribers(product) {
     this.customers.forEach((customer) => {
-      this.sendEmail(
+      customer.sendEmail(
         customer,
         `Новий продукт "${product.name}" в магазині ${this.name}!`
       );
